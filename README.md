@@ -80,3 +80,6 @@ The system uses a **pretrained ResNet18 model**, fine-tuned for binary classific
 ```bash
 git clone https://github.com/your-username/deepfake-detection.git
 cd deepfake-detection
+
+![WhatsApp Image 2025-11-17 at 16 04 00_bb75d39d](https://github.com/user-attachments/assets/a59d252b-0c9b-4a25-a017-91d368b55d0a)
+
