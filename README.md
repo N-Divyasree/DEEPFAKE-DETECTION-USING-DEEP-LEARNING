@@ -1,54 +1,82 @@
-# 📰 Fake News Detection System
+# Deepfake Detection Using Deep Learning
+
+A deep learning–based system to detect **fake vs real images and videos** using **transfer learning (ResNet18)**.  
+The project leverages computer vision and deep learning techniques and provides a **Flask-based web application** for real-time deepfake detection.
+
+---
 
 ## 📌 Project Overview
-This project focuses on detecting **fake news articles** using **Machine Learning techniques**.  
-The system analyzes textual news data and classifies it as **Real** or **Fake** based on learned patterns.
 
-The aim of this project is to reduce the spread of misinformation by providing an automated and accurate detection mechanism.
+Deepfake technology enables the creation of highly realistic manipulated media, posing serious threats to digital security and misinformation.  
+This project aims to **identify deepfake images and videos** by analyzing facial features using a deep learning model.
 
----
-
-## 🎯 Objectives
-- To analyze news articles using text processing techniques  
-- To build a machine learning model for fake news classification  
-- To improve accuracy using feature extraction methods  
-- To provide a reliable system for detecting misinformation
+The system uses a **pretrained ResNet18 model**, fine-tuned for binary classification (Real/Fake), and is deployed via a web interface for easy user interaction.
 
 ---
 
-## 🛠️ Technologies Used
-- **Programming Language:** Python  
-- **Libraries:**  
-  - NumPy  
-  - Pandas  
-  - Scikit-learn  
-  - NLTK  
-- **Machine Learning Algorithms:**  
-  - Logistic Regression  
-- **Feature Extraction:**  
-  - TF-IDF Vectorization  
+## 🧠 Key Features
+
+- Deepfake detection using **ResNet18 (Transfer Learning)**
+- Face extraction using **Haar Cascade**
+- Image preprocessing and data augmentation
+- Real-time prediction via **Flask REST API**
+- Web interface for uploading images/videos
+- Supports both **image and video inputs**
 
 ---
 
-## 📂 Dataset
-- The dataset contains labeled news articles categorized as **Fake** or **Real**
-- Data preprocessing includes:
-  - Removing stop words
-  - Text normalization
-  - Tokenization
+## 🏗️ System Architecture
+
+1. User uploads an image or video via web interface  
+2. Backend processes the file using Flask  
+3. Frames are extracted (for videos)  
+4. Faces are detected using Haar Cascade  
+5. Preprocessed faces are passed to the ResNet18 model  
+6. Model predicts **Real / Fake**  
+7. Result is displayed on the frontend  
 
 ---
 
-## ⚙️ Methodology
-1. Data Collection  
-2. Data Cleaning & Preprocessing  
-3. Feature Extraction using TF-IDF  
-4. Model Training using Logistic Regression  
-5. Model Evaluation using performance metrics  
+## 🛠️ Tech Stack
+
+### Programming Language
+- Python
+
+### Deep Learning & Computer Vision
+- PyTorch
+- Torchvision
+- Transfer Learning (ResNet18)
+- OpenCV
+- Haar Cascade Face Detection
+
+### Web Technologies
+- Flask
+- HTML
+- CSS
+- JavaScript
+
+### Dataset
+- FaceForensics++ (FF++)
 
 ---
 
-## 📊 Results
-- The model achieved an **F1-score of approximately 87%**
-- The system effectively differentiates between real and fake news articles
+## 📊 Model Details
 
+- **Model:** ResNet18 (pretrained on ImageNet)
+- **Task:** Binary Classification (Real vs Fake)
+- **Input Size:** 224 × 224
+- **Evaluation Metrics:**  
+  - Accuracy  
+  - Precision  
+  - Recall  
+  - F1-score  
+  - Confusion Matrix  
+
+---
+
+## 🚀 Installation & Setup
+
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/your-username/deepfake-detection.git
+cd deepfake-detection
