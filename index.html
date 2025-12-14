@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deepfake Detection</title>
+
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, #ff00c8, #4600ff, #00eaff);
+            background-size: 300% 300%;
+            animation: bgAnim 10s ease infinite;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        @keyframes bgAnim {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            width: 450px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0px 0px 25px rgba(255, 255, 255, 0.4);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffebff;
+            text-shadow: 0px 0px 12px rgba(255,255,255,0.9);
+        }
+
+        input[type="file"] {
+            margin-top: 10px;
+            margin-bottom: 18px;
+            padding: 10px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 10px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        #preview {
+            margin-top: 15px;
+            width: 100%;
+            max-width: 320px;
+            height: 320px;
+            border-radius: 14px;
+            display: none;
+            object-fit: cover;
+            border: 3px solid #fff;
+            box-shadow: 0px 0px 20px rgba(255,255,255,0.6);
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #predictBtn {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: linear-gradient(90deg, #ff00c8, #00eaff);
+            border: none;
+            border-radius: 12px;
+            color: #000;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s ease;
+            box-shadow: 0px 4px 15px rgba(255,255,255,0.4);
+        }
+
+        #predictBtn:hover {
+            transform: scale(1.07);
+            box-shadow: 0px 0px 25px rgba(255,255,255,0.8);
+        }
+
+        #result {
+            margin-top: 25px;
+            font-size: 28px;
+            font-weight: 700;
+            text-shadow: 0px 0px 15px rgba(0,0,0,0.6);
+        }
+
+        .real {
+            color: #00ff9c;
+            text-shadow: 0px 0px 12px #00ff9c;
+        }
+
+        .fake {
+            color: #ff4d6d;
+            text-shadow: 0px 0px 12px #ff4d6d;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+    <h1>Deepfake Detection System</h1>
+
+    <input type="file" id="fileInput" accept="image/*">
+
+    <img id="preview">
+
+    <button id="predictBtn" onclick="predictImage()">Predict</button>
+
+    <div id="result">Upload image & click Predict</div>
+</div>
+
+<script>
+
+    // Show preview when image is selected
+    document.getElementById("fileInput").addEventListener("change", () => {
+        let file = document.getElementById("fileInput").files[0];
+        if (file) {
+            let preview = document.getElementById("preview");
+            preview.src = URL.createObjectURL(file);
+            preview.style.display = "block";
+        }
+    });
+
+    function predictImage() {
+        let fileInput = document.getElementById("fileInput");
+        let resultDiv = document.getElementById("result");
+
+        if (fileInput.files.length === 0) {
+            alert("Please select an image!");
+            return;
+        }
+
+        let file = fileInput.files[0];
+        let formData = new FormData();
+        formData.append("file", file);
+
+        fetch("http://127.0.0.1:5000/predict", {
+            method: "POST",
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+
+            let confidence = Number(data.confidence);
+
+            let finalPred = confidence >= 0.97 ? "REAL" : "FAKE";
+            let cssClass = finalPred === "REAL" ? "real" : "fake";
+
+            resultDiv.innerHTML = Prediction: <span class="${cssClass}">${finalPred}</span>;
+        })
+        .catch(err => {
+            alert("Error: " + err);
+            console.error(err);
+        });
+    }
+</script>
+
+</body>
+</html>
